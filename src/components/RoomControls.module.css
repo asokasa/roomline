@@ -13,15 +13,8 @@
   grid-column: 1 / -1;
 }
 
-.buttonStack {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
 @media (max-width: 760px) {
-  .roomSizeForm,
-  .buttonStack {
+  .roomSizeForm {
     grid-template-columns: 1fr;
   }
 }

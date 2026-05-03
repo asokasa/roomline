@@ -7,7 +7,6 @@ import { SummaryPanel } from './components/SummaryPanel'
 import { TableDetails } from './components/TableDetails'
 import { INITIAL_ROOM_SIZE, TABLE_TYPE_LABELS } from './constants'
 import rawTables from './data/tables.json'
-import { usePersistentTables } from './hooks/usePersistentTables'
 import type { GameTable, NewTableDraft, Position, RawGameTable } from './types'
 import {
   getClearanceIssueIds,
@@ -16,27 +15,23 @@ import {
   roundPosition,
 } from './utils/tableGeometry'
 
-const STORAGE_KEY = 'roomlie-tables'
 const INITIAL_TABLES = normalizeTables(rawTables as RawGameTable[])
 
-function getNextId(tables: GameTable[]) {
+function nextId(tables: GameTable[]) {
   return tables.reduce((maxId, table) => Math.max(maxId, table.id), 0) + 1
 }
 
-function clampStatus(status: number) {
+function validStatus(status: number) {
   return Math.min(Math.max(status, 1), 10)
 }
 
 function App() {
-  const { tables, setTables, loadedFromStorage, saveTables } =
-    usePersistentTables(STORAGE_KEY, INITIAL_TABLES)
+  const [tables, setTables] = useState<GameTable[]>(INITIAL_TABLES)
   const [roomSize, setRoomSize] = useState(INITIAL_ROOM_SIZE)
   const [selectedId, setSelectedId] = useState<number | null>(null)
   const [pendingTable, setPendingTable] = useState<NewTableDraft | null>(null)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
-  const [feedback, setFeedback] = useState<string | null>(
-    loadedFromStorage ? 'A mentett asztalok betöltődtek.' : null,
-  )
+  const [feedback, setFeedback] = useState<string | null>(null)
 
   const selectedTable = tables.find((table) => table.id === selectedId) ?? null
   const clearanceIssueIds = useMemo(
@@ -44,10 +39,10 @@ function App() {
     [roomSize, tables],
   )
 
-  const placeNewTable = (draft: NewTableDraft, position: Position) => {
+  const addTable = (draft: NewTableDraft, position: Position) => {
     const newTable: GameTable = {
       ...draft,
-      id: getNextId(tables),
+      id: nextId(tables),
       position: roundPosition(position),
     }
     const error = getPlacementError(newTable, tables, roomSize)
@@ -60,7 +55,7 @@ function App() {
     setTables([...tables, newTable])
     setSelectedId(newTable.id)
     setPendingTable(null)
-    setFeedback('Az új asztal bekerült a terembe.')
+    setFeedback('sikeres lerakas')
     return true
   }
 
@@ -68,7 +63,7 @@ function App() {
     draft: NewTableDraft,
     position: Position,
   ) => {
-    if (placeNewTable(draft, position)) {
+    if (addTable(draft, position)) {
       setIsAddModalOpen(false)
     }
   }
@@ -77,7 +72,7 @@ function App() {
     setPendingTable(draft)
     setSelectedId(null)
     setIsAddModalOpen(false)
-    setFeedback(`${TABLE_TYPE_LABELS[draft.type]} elhelyezése folyamatban.`)
+    setFeedback(`${TABLE_TYPE_LABELS[draft.type]} lerakas folyamatban`)
   }
 
   const handleMoveTable = (id: number, position: Position) => {
@@ -115,13 +110,13 @@ function App() {
       return
     }
 
-    setFeedback('Az asztal pozíciója frissült.')
+    setFeedback('az asztal helye frissult')
   }
 
   const handleStatusChange = (id: number, status: number) => {
     setTables((currentTables) =>
       currentTables.map((table) =>
-        table.id === id ? { ...table, status: clampStatus(status) } : table,
+        table.id === id ? { ...table, status: validStatus(status) } : table,
       ),
     )
     setFeedback(null)
@@ -130,7 +125,7 @@ function App() {
   const handleDeleteTable = (id: number) => {
     setTables((currentTables) => currentTables.filter((table) => table.id !== id))
     setSelectedId(null)
-    setFeedback('Az asztal törölve lett.')
+    setFeedback('asztal torolve')
   }
 
   const handleApplyRoomSize = (nextRoomSize: typeof roomSize) => {
@@ -138,15 +133,7 @@ function App() {
     setTables([])
     setSelectedId(null)
     setPendingTable(null)
-    setFeedback('A terem mérete frissült, az asztalok törlődtek.')
-  }
-
-  const handleSaveTables = () => {
-    setFeedback(
-      saveTables()
-        ? 'Az asztalok mentése sikerült.'
-        : 'Az asztalok mentése nem sikerült.',
-    )
+    setFeedback('uj terem meret, asztalok torolve')
   }
 
   const handleReloadInitialTables = () => {
@@ -154,7 +141,7 @@ function App() {
     setTables(INITIAL_TABLES)
     setSelectedId(null)
     setPendingTable(null)
-    setFeedback('A kiinduló asztalok visszatöltődtek.')
+    setFeedback('az eredeti asztalok betoltodtek.')
   }
 
   return (
@@ -191,7 +178,7 @@ function App() {
             onMoveFinished={handleMoveFinished}
             onPlacePendingTable={(position) => {
               if (pendingTable) {
-                placeNewTable(pendingTable, position)
+                addTable(pendingTable, position)
               }
             }}
             onCancelPendingTable={() => {
@@ -207,10 +194,8 @@ function App() {
           <RoomControls
             roomSize={roomSize}
             tableCount={tables.length}
-            loadedFromStorage={loadedFromStorage}
             onApplyRoomSize={handleApplyRoomSize}
             onOpenAddTable={() => setIsAddModalOpen(true)}
-            onSaveTables={handleSaveTables}
             onReloadInitialTables={handleReloadInitialTables}
           />
 

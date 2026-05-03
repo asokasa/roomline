@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import type { CSSProperties, MouseEvent, PointerEvent } from 'react'
 import { TABLE_SPECS, TABLE_TYPE_LABELS } from '../constants'
 import { useTableDrag } from '../hooks/useTableDrag'
@@ -38,12 +38,9 @@ type RoomProps = {
   onCancelPendingTable: () => void
 }
 
-function createPreviewTable(
-  pendingTable: NewTableDraft,
-  position: Position,
-): GameTable {
+function previewTableFrom(draft: NewTableDraft, position: Position): GameTable {
   return {
-    ...pendingTable,
+    ...draft,
     id: -1,
     position,
   }
@@ -82,14 +79,10 @@ export function Room({
     '--room-height': `${roomSize.height}px`,
   }
 
-  const previewTable = useMemo(() => {
-    if (!pendingTable || !previewPosition) {
-      return null
-    }
-
-    return createPreviewTable(pendingTable, previewPosition)
-  }, [pendingTable, previewPosition])
-
+  const previewTable =
+    pendingTable && previewPosition
+      ? previewTableFrom(pendingTable, previewPosition)
+      : null
   const previewError = previewTable
     ? getPlacementError(previewTable, tables, roomSize)
     : null
@@ -101,7 +94,7 @@ export function Room({
 
     const nextPreview = getRoomPosition(
       event,
-      createPreviewTable(pendingTable, { x: 0, y: 0 }),
+      previewTableFrom(pendingTable, { x: 0, y: 0 }),
     )
 
     setPreviewPosition(nextPreview)
@@ -114,7 +107,7 @@ export function Room({
 
     const nextPosition = getRoomPosition(
       event,
-      createPreviewTable(pendingTable, { x: 0, y: 0 }),
+      previewTableFrom(pendingTable, { x: 0, y: 0 }),
     )
 
     onPlacePendingTable(nextPosition)

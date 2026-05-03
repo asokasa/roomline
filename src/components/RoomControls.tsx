@@ -7,20 +7,16 @@ import styles from './RoomControls.module.css'
 type RoomControlsProps = {
   roomSize: RoomSize
   tableCount: number
-  loadedFromStorage: boolean
   onApplyRoomSize: (roomSize: RoomSize) => void
   onOpenAddTable: () => void
-  onSaveTables: () => void
   onReloadInitialTables: () => void
 }
 
 export function RoomControls({
   roomSize,
   tableCount,
-  loadedFromStorage,
   onApplyRoomSize,
   onOpenAddTable,
-  onSaveTables,
   onReloadInitialTables,
 }: RoomControlsProps) {
   const { width, height, setWidth, setHeight, applyRoomSize } =
@@ -33,9 +29,6 @@ export function RoomControls({
           <h2>vezerlo panel</h2>
           <p>{tableCount} asztalok szama</p>
         </div>
-        {loadedFromStorage ? (
-          <span className={sharedStyles.pill}>save-bol</span>
-        ) : null}
       </div>
 
       <button
@@ -83,22 +76,13 @@ export function RoomControls({
         </button>
       </form>
 
-      <div className={styles.buttonStack}>
-        <button
-          type="button"
-          className={sharedStyles.button}
-          onClick={onSaveTables}
-        >
-          Asztalok mentese
-        </button>
-        <button
-          type="button"
-          className={sharedStyles.button}
-          onClick={onReloadInitialTables}
-        >
-          Kiindulo asztalok
-        </button>
-      </div>
+      <button
+        type="button"
+        className={`${sharedStyles.button} ${sharedStyles.buttonWide}`}
+        onClick={onReloadInitialTables}
+      >
+        Kiindulo asztalok
+      </button>
     </section>
   )
 }
