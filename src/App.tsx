@@ -161,8 +161,8 @@ function App() {
     <div className={styles.appShell}>
       <header className={styles.appHeader}>
         <div>
-          <p className={styles.eyebrow}>Roomlie</p>
-          <h1>Teremkezelő komponens</h1>
+          <p className={styles.eyebrow}>roomlie</p>
+          <h1>asztal lepakolo</h1>
         </div>
         <div className={styles.headerMetrics} aria-label="Terem adatok">
           <span>{tables.length} asztal</span>

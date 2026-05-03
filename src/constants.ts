@@ -41,23 +41,23 @@ export const TABLE_SPECS: Record<
 }
 
 export const TABLE_TYPE_LABELS: Record<TableType, string> = {
-  snooker: 'Biliárd',
-  'air-hockey': 'Léghoki',
-  foosball: 'Csocsó',
+  snooker: 'biliard',
+  'air-hockey': 'leghoki',
+  foosball: 'csocso',
 }
 
 export const CATEGORY_LABELS: Record<TableCategory, string> = {
-  competition: 'Verseny',
-  normal: 'Normál',
-  kids: 'Gyerek',
+  competition: 'verseny',
+  normal: 'norm',
+  kids: 'gyerek',
 }
 
 export const COLOR_LABELS: Record<TableColor, string> = {
-  green: 'Zöld',
-  blue: 'Kék',
-  red: 'Piros',
-  yellow: 'Sárga',
-  purple: 'Lila',
+  green: 'zold',
+  blue: 'kek',
+  red: 'piros',
+  yellow: 'sarga',
+  purple: 'lila',
 }
 
 export const COLOR_RGB: Record<TableColor, [number, number, number]> = {

@@ -24,8 +24,8 @@ export function TableDetails({
   if (!table) {
     return (
       <section className={`${sharedStyles.panel} ${styles.detailsPanel}`}>
-        <h2>Asztal részletei</h2>
-        <p className={styles.emptyState}>Kattints egy asztalra a teremben.</p>
+        <h2>asztal reszletei</h2>
+        <p className={styles.emptyState}>valassz asztalt</p>
       </section>
     )
   }
@@ -39,7 +39,7 @@ export function TableDetails({
           <h2>{TABLE_TYPE_LABELS[table.type]}</h2>
           <p>{CATEGORY_LABELS[table.category]} kategória</p>
         </div>
-        {table.isLocked ? <span className={sharedStyles.pill}>Fixált</span> : null}
+        {table.isLocked ? <span className={sharedStyles.pill}>fix</span> : null}
       </div>
 
       <dl className={styles.detailList}>
