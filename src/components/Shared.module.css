@@ -1,0 +1,159 @@
+.panel {
+  border: 1px solid rgba(74, 235, 255, 0.13);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    linear-gradient(180deg, rgba(14, 23, 42, 0.94), rgba(8, 13, 25, 0.94)),
+    #0b1020;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 18px 42px rgba(0, 0, 0, 0.36),
+    0 0 32px rgba(56, 248, 255, 0.04);
+}
+
+.panel h2 {
+  color: #f4fbff;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.panel p {
+  color: #8da9b6;
+  font-size: 14px;
+}
+
+.panelTitleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  border: 1px solid rgba(82, 255, 224, 0.2);
+  border-radius: 999px;
+  padding: 4px 11px;
+  background: rgba(9, 20, 33, 0.76);
+  color: #c9fffb;
+  font-size: 13px;
+  font-weight: 760;
+  box-shadow:
+    inset 0 0 16px rgba(56, 248, 255, 0.1),
+    0 0 20px rgba(56, 248, 255, 0.06);
+}
+
+.button,
+.iconButton {
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease,
+    border-color 120ms ease;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border: 1px solid rgba(122, 255, 231, 0.17);
+  padding: 8px 13px;
+  background: rgba(9, 20, 33, 0.88);
+  color: #dffcff;
+  font-weight: 780;
+  box-shadow: inset 0 0 14px rgba(56, 248, 255, 0.04);
+}
+
+.button:hover,
+.iconButton:hover {
+  transform: translateY(-1px);
+  border-color: rgba(122, 255, 231, 0.36);
+  box-shadow:
+    0 0 18px rgba(56, 248, 255, 0.1),
+    0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
+.buttonPrimary {
+  border-color: rgba(50, 255, 219, 0.42);
+  background: linear-gradient(135deg, #0e918c, #284f9e);
+  color: #f8ffff;
+  box-shadow:
+    0 0 20px rgba(45, 106, 255, 0.14),
+    0 0 18px rgba(8, 199, 189, 0.11);
+}
+
+.buttonSecondary {
+  border-color: rgba(255, 58, 170, 0.37);
+  background: rgba(66, 21, 60, 0.84);
+  color: #ffdff3;
+  box-shadow: inset 0 0 18px rgba(255, 58, 170, 0.07);
+}
+
+.buttonDanger {
+  border-color: rgba(255, 75, 124, 0.39);
+  background: rgba(121, 24, 47, 0.92);
+  color: #ffe6ee;
+  box-shadow: 0 0 20px rgba(255, 75, 124, 0.1);
+}
+
+.buttonGhost {
+  background: rgba(14, 25, 41, 0.7);
+}
+
+.buttonWide {
+  width: 100%;
+}
+
+.iconButton {
+  display: inline-grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgba(122, 255, 231, 0.17);
+  background: rgba(9, 20, 33, 0.88);
+  color: #dffcff;
+  font-weight: 900;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  color: #bdeaf2;
+  font-size: 13px;
+  font-weight: 820;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid rgba(122, 255, 231, 0.16);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: rgba(4, 10, 20, 0.86);
+  color: #f3fdff;
+  box-shadow: inset 0 0 14px rgba(56, 248, 255, 0.035);
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: #78d2d8;
+  outline: 2px solid rgba(56, 248, 255, 0.11);
+}
+
+.rangeRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.rangeRow strong {
+  color: #78d2d8;
+  text-shadow: 0 0 12px rgba(56, 248, 255, 0.21);
+}
