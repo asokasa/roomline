@@ -48,7 +48,7 @@ export const TABLE_TYPE_LABELS: Record<TableType, string> = {
 
 export const CATEGORY_LABELS: Record<TableCategory, string> = {
   competition: 'verseny',
-  normal: 'norm',
+  normal: 'normal',
   kids: 'gyerek',
 }
 

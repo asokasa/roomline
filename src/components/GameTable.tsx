@@ -17,6 +17,8 @@ type GameTableProps = {
   selected: boolean
   hasClearanceIssue: boolean
   isDragging: boolean
+  interactive: boolean
+  draggable: boolean
   onSelect: (id: number) => void
   onPointerDown: (
     table: GameTableData,
@@ -37,6 +39,8 @@ export function GameTable({
   selected,
   hasClearanceIssue,
   isDragging,
+  interactive,
+  draggable,
   onSelect,
   onPointerDown,
   onPointerMove,
@@ -63,6 +67,8 @@ export function GameTable({
     selected ? styles.selected : '',
     hasClearanceIssue ? styles.issue : '',
     isDragging ? styles.dragging : '',
+    !interactive ? styles.readOnly : '',
+    !draggable && interactive ? styles.selectOnly : '',
     table.isLocked ? styles.locked : '',
   ]
     .filter(Boolean)
@@ -76,9 +82,12 @@ export function GameTable({
       aria-label={`${TABLE_TYPE_LABELS[table.type]}, ${
         CATEGORY_LABELS[table.category]
       }, állapot ${table.status}/10`}
+      disabled={!interactive}
       onClick={(event) => {
         event.stopPropagation()
-        onSelect(table.id)
+        if (interactive) {
+          onSelect(table.id)
+        }
       }}
       onPointerDown={(event) => onPointerDown(table, event)}
       onPointerMove={(event) => onPointerMove(table, event)}

@@ -27,6 +27,8 @@ type RoomProps = {
   selectedId: number | null
   clearanceIssueIds: Set<number>
   pendingTable: NewTableDraft | null
+  canSelectTables: boolean
+  canDragTables: boolean
   onSelectTable: (id: number) => void
   onMoveTable: (id: number, position: Position) => void
   onMoveFinished: (
@@ -52,6 +54,8 @@ export function Room({
   selectedId,
   clearanceIssueIds,
   pendingTable,
+  canSelectTables,
+  canDragTables,
   onSelectTable,
   onMoveTable,
   onMoveFinished,
@@ -69,6 +73,7 @@ export function Room({
   } = useTableDrag({
     roomSize,
     pendingTable,
+    canDragTables,
     onSelectTable,
     onMoveTable,
     onMoveFinished,
@@ -151,6 +156,8 @@ export function Room({
               selected={selectedId === table.id}
               hasClearanceIssue={clearanceIssueIds.has(table.id)}
               isDragging={draggingId === table.id}
+              interactive={canSelectTables}
+              draggable={canDragTables && !table.isLocked}
               onSelect={onSelectTable}
               onPointerDown={handleTablePointerDown}
               onPointerMove={handleTablePointerMove}

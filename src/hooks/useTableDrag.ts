@@ -14,6 +14,7 @@ type DragState = {
 type UseTableDragProps = {
   roomSize: RoomSize
   pendingTable: NewTableDraft | null
+  canDragTables: boolean
   onSelectTable: (id: number) => void
   onMoveTable: (id: number, position: Position) => void
   onMoveFinished: (
@@ -26,6 +27,7 @@ type UseTableDragProps = {
 export function useTableDrag({
   roomSize,
   pendingTable,
+  canDragTables,
   onSelectTable,
   onMoveTable,
   onMoveFinished,
@@ -65,7 +67,7 @@ export function useTableDrag({
     event.stopPropagation()
     onSelectTable(table.id)
 
-    if (table.isLocked || pendingTable) {
+    if (!canDragTables || table.isLocked || pendingTable) {
       return
     }
 

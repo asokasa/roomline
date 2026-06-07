@@ -80,6 +80,19 @@
   filter: saturate(0.74);
 }
 
+.readOnly {
+  cursor: default;
+  filter: saturate(0.78);
+}
+
+.readOnly:disabled {
+  opacity: 1;
+}
+
+.selectOnly {
+  cursor: pointer;
+}
+
 .type {
   align-self: end;
   font-size: 15px;
